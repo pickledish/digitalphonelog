@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Phone Log - ECM</title>
+	<link rel="stylesheet" href="static/bootstrap.css" type="text/css"/>
+	<link rel="stylesheet" href="static/bootstrap-theme.min.css"  type="text/css"/>
+
+	<style> 
+
+		@-moz-document url-prefix() {
+		  select.form-control {
+		    padding-right: 25px;
+		    background-image: url("data:image/svg+xml,\
+		      <svg version='1.1' xmlns='http://www.w3.org/2000/svg' width='14px'\
+		           height='14px' viewBox='0 0 1200 1000' fill='rgb(51,51,51)'>\
+		        <path d='M1100 411l-198 -199l-353 353l-353 -353l-197 199l551 551z'/>\
+		      </svg>");
+		    background-repeat: no-repeat;
+		    background-position: calc(100% - 7px) 50%;
+		    -moz-appearance: none;
+		    appearance: none;
+		  }
+		}
+
+		.loader {
+			margin-right: 16px;
+			display: inline-block;
+			border: 8px solid #BCD2ff; /* Light blue */
+			border-top: 8px solid #003B71; /* Blue */
+			border-radius: 50%;
+			width: 32px;
+			height: 32px;
+			animation: spin 2s linear infinite;
+		}
+
+		@keyframes spin {
+			0% { transform: rotate(0deg); }
+			100% { transform: rotate(360deg); }
+		}
+	</style>
+
+	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.js"></script>
+
+	<script src="static/bootstrap.js"></script>
+
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+
+	<script src="static/bootstrap3-typeahead.js"></script>
+	<script src="static/index.js"></script>
+
+	<style> 
+		body {
+			background-color: rgb(187, 223, 237);
+		}
+		.jumbotron {
+		 	background-color: rgba(245,245,245,0.75); !important;
+		}	
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="jumbotron" style = "margin-top: 2%">
+			<h1>ECM Log Entry</h1>
+			<p style = "margin-bottom: 2em;">Remeber to ask these questions during the call. Leave a box blank if and only if it's not relevant.</p>
+
+				<div class="row" style = "margin-bottom: 0%">
+					<div class="col-lg-3 form-group">
+						<label class="control-label" for="date">Date:</label>
+						<input class="form-control" id="date" name="date" placeholder="MM/DD/YYYY" type="text"/>
+					</div> 
+					<div class="col-lg-3">
+						<label for="time">Time:</label>
+						<input type="text" class="form-control" id="time">
+					</div>
+					<div class="col-lg-3 form-group">
+						<label for="howFind">How did they find us?</label>
+						<select class="form-control" id="howFind">
+						<option>---</option>
+						<option>Phone Call</option>
+						<option>Walk-In</option>
+						<option>Professional Staff</option>
+						</select>
+					</div>
+					<div class="col-lg-3">&nbsp;</div>
+				</div>
+
+				<div class="row" style = "margin-bottom: 0%">
+
+					<div class="col-lg-3">
+						<div class="form-group">
+						<label for="sel1">Type of Issue:</label>
+							<select class="form-control" id="sel1">
+							<option>---</option>
+							<option>Reservation</option>
+							<option>Troubleshooting</option>
+							<option>General Inquiry</option>
+							<option>ECM Internal</option>
+
+							</select>
+						</div>
+					</div>
+
+					<div class="col-lg-3">
+						<div class="form-group">
+						<label for="sel2" id="sel2Label">---</label>
+							<select class="form-control" id="sel2" disabled>
+							<option>---</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="col-lg-3">
+						<div class="form-group">
+						<label for="sel3" id="sel3Label">---</label>
+							<select class="form-control" id="sel3" disabled>
+							<option>---</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="col-lg-3">
+						<div class="form-group">
+						<label for="sel4" id="sel4Label">---</label>
+							<select class="form-control" id="sel4" disabled>
+							<option>---</option>
+							</select>
+						</div>
+					</div>
+				</div>
+
+				<div class="row" style = "margin-bottom: 1%">
+
+					<div class="col-lg-3">
+						<label for="class">Class (or Department):</label>
+						<input type="text" class="form-control" id="class">
+					</div>
+					<div class="col-lg-3">
+						<label for="room">Room:</label>
+						<input type="text" class="form-control" id="room">
+					</div>
+					<div class="col-lg-3">
+						<label for="name">Name of Caller:</label>
+						<input type="text" class="form-control" id="name">
+					</div> 
+					<div class="col-lg-3">
+						<label for="ext">Phone Extension or Email:</label>
+						<input type="text" class="form-control" id="ext">
+					</div>
+					
+				</div>
+
+				<div class="row" style="margin-bottom: 0%"> <hr style="border-color: #666666;" /> </div>
+
+				<div class="row" style = "margin-bottom: 0%">
+					<div class="col-lg-3">
+						<label for="person">Call Taker (You):</label>
+						<input type="text" class="form-control" id="person">
+					</div>
+					<div class="col-lg-3">
+						<div class="form-group">
+						<label for="how">Resolved By?</label>
+							<select class="form-control" id="how">
+							<option>---</option>
+							<option>Added to EMS</option>
+							<option>Emailed Professional Staff</option>
+							<option>Opened HEAT Ticket</option>
+							<option>Opened Facilities Ticket</option>
+							<option>Over the phone</option>
+							<option>Sent tech to location</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-lg-3">
+						<label for="length">Resolution Time (minutes):</label>
+						<input type="text" class="form-control" id="length">
+					</div>
+					<div class="col-lg-3">&nbsp;</div>
+				</div>
+
+				<div class="row" style = "margin-bottom: 2%">
+					<div class="col-lg-12 form-group">
+						<label for="comments">Comments, Notes, Ticket Numbers:</label>
+						<input type="text" class="form-control" id="comments">
+					</div>
+				</div>
+
+			<p>
+				<a id="clear" class="btn btn-danger btn-large" href=".">Clear Log</a>
+				<a class="btn btn-primary btn-large" href="https://docs.google.com/spreadsheets/d/1Ko85jAscxEVN77QP4-ASKqfMwYrfglLCnT0N_ZvbpXA/edit?usp=sharing" target="_blank">See All Entries</a>
+				<span style = "font-size: 11pt; margin-left: 4px;">Logged {{numEntries}} phone calls and counting</span>
+				<span class = "pull-right"><span class = "loader"></span><a id="submit" class="btn btn-success btn-large">Submit Log</a></span>
+			</p>
+		</div>
+	</div>
+</body>
+</html>
