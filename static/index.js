@@ -8,10 +8,12 @@ $(document).ready(function() {
 	$('input[name="date"]').datepicker().datepicker("setDate", new Date());
 	$('#time').val(getTime());
 
-	var roomList = ["B&L 106", "B&L 109", "B&L 269", "B&L 270", "B&L 315", "CSB 209", "CSB 601", "CSB 632", "CSB 633", "Dewey 1-101", "Dewey 2-110D", "Dewey 2-110E", "Dewey 2-162", "Dewey 4-162", "Gavett 117", "Gavett 202", "Gavett 208", "Gavett 244", "Gavett 301", "Gavett 310", "Gavett 312", "Goergen 101", "Goergen 102", "Goergen 108", "Goergen 109", "Goergen 110", "Goergen 431", "Gleason G118", "Gleason G119", "Gleason G120", "Gleason G318/418", "Harkness Basement (B3)", "Harkness 114", "Harkness 115", "Harkness 208", "Harkness 210", "Hoyt Auditorium", "Hubbell Auditorium (141)", "Lander Auditorium (140)", "Hutch 138", "Hutch 473", "Hylan 101", "Hylan 102", "Hylan 105", "Hylan 201", "Hylan 202", "Hylan 203", "Hylan 206", "Hylan 303", "Hylan 305", "Hylan 306", "Hylan 307", "Lattimore 201", "Lattimore 210", "Lattimore 413", "Lattimore 431", "Lechase 103", "Lechase 104", "Lechase 121", "Lechase 122", "Lechase 124", "Lechase 141", "Lechase 143", "Lechase 148", "Lechase 161", "Lechase 163", "Lechase 181", "Lechase 182", "Lechase 184", "Upper Strong", "Lower Strong", "Meliora 203", "Meliora 205", "Meliora 206", "Meliora 209", "Meliora 210", "Meliora 218", "Meliora 219", "Meliora 221", "Meliora 224", "Morey 205", "Morey 321", "Morey 501", "Morey 502", "Morey 504", "Morey 524", "Morey 525", "Rettner 104", "Rettner 106", "Rettner 201", "Rettner 307", "Schlegel 102", "Schlegel 103", "Schlegel 107", "Schlegel 207", "Schlegel 301", "Schlegel 309", "Schlegel 407", "Todd 202", "Wegmans 1005", "Wegmans 1009", "Wegmans 1400", "Wilmot 116", "RRL Lam Square", "RRL Humanities A", "RRL Humanities B", "RRL Humanities C", "RRL Humanities D", "RRL 304", "RRL Gleason", "RRL IT Center", "RRL G108", "RRL G108a", "Wilson Commons 407", "Wilson Commons 121", "Wilson Commons 122", "Wilson Commons Hirst Lounge", "Wilson Commons Gowen Room", "Wilson Commons Havens Lounge", "Wilson Commons Stackel Room(202)"];
+	var roomList = ["RRL Instructional Suite A","RRL Instructional Suite B", "Genesee 308","Genesee 309", "Genesee 321","Genesee 323", "Genesee 325", "B&L 106", "B&L 109", "B&L 269", "B&L 270", "B&L 315", "CSB 209", "CSB 601", "CSB 632", "CSB 633", "Dewey 1-101", "Dewey 2-110D", "Dewey 2-110E", "Dewey 2-162", "Dewey 4-162", "Gavett 117", "Gavett 202", "Gavett 206", "Gavett 208", "Gavett 244", "Gavett 301", "Gavett 310", "Gavett 312", "Goergen 101", "Goergen 102", "Goergen 108", "Goergen 109", "Goergen 110", "Goergen 431", "Gleason G118", "Gleason G119", "Gleason G120", "Gleason G318/418", "Harkness Basement (B3)", "Harkness 114", "Harkness 115", "Harkness 208", "Harkness 210", "Hoyt Auditorium", "Hubbell Auditorium (141)", "Lander Auditorium (140)", "Hutch 138", "Hutch 473", "Hylan 101", "Hylan 102", "Hylan 105", "Hylan 201", "Hylan 202", "Hylan 203", "Hylan 206", "Hylan 303", "Hylan 305", "Hylan 306", "Hylan 307", "Lattimore 201", "Lattimore 210", "Lattimore 413", "Lattimore 431", "Lechase 103", "Lechase 104", "Lechase 121", "Lechase 122", "Lechase 124", "Lechase 141", "Lechase 143", "Lechase 148", "Lechase 161", "Lechase 163", "Lechase 181", "Lechase 182", "Lechase 184", "Upper Strong", "Lower Strong", "Meliora 203", "Meliora 205", "Meliora 206", "Meliora 209", "Meliora 210", "Meliora 218", "Meliora 219", "Meliora 221", "Meliora 224", "Morey 205", "Morey 321", "Morey 501", "Morey 502", "Morey 504", "Morey 524", "Morey 525", "Rettner 104", "Rettner 106", "Rettner 201", "Rettner 307", "Schlegel 102", "Schlegel 103", "Schlegel 107", "Schlegel 207", "Schlegel 301", "Schlegel 309", "Schlegel 407", "Todd 202", "Wegmans 1005", "Wegmans 1009", "Wegmans 1400", "Wilmot 116", "RRL Lam Square", "RRL Humanities A", "RRL Humanities B", "RRL Humanities C", "RRL Humanities D", "RRL 304", "RRL Gleason", "RRL IT Center", "RRL G108", "RRL G108a", "Wilson Commons 407", "Wilson Commons 121", "Wilson Commons 122", "Wilson Commons Hirst Lounge", "Wilson Commons Gowen Room", "Wilson Commons Havens Lounge", "Wilson Commons Stackel Room(202)"];
 	$("#room").typeahead({ source: roomList });
 
 	$(".loader").hide();
+
+	$('input,textarea').attr('autocomplete', 'off');
 
 })
 
@@ -118,6 +120,7 @@ $(document).on("change", "#sel1", function(){
 						{text: "Lost and Found", value: "Lost and Found"},
 						{text: "Equipment", value: "Equipment"},
 						{text: "Room Reservation", value: "Room Reservation"}, 
+						{text: "Room Info", value: "Room Info"}, 
 						{text: "Other", value: "Other"}];
 		$("#sel2").replaceOptions(options);
 		$("#sel2").removeAttr('disabled');
@@ -252,6 +255,7 @@ $(document).on("change", "#sel2", function(){
 		$("#sel3Label").text("Which Piece of Equipment?");
 		var options1 = [{text: "---", value: 0},
 						{text: "Crestron System", value: "Crestron System"},
+						{text: "Wall-Mounted Display", value: "Wall-Mounted Display"},
 						{text: "Ceiling-Mounted Projector", value: "Ceiling-Mounted Projector"},
 						{text: "Projector Screen", value: "Projector Screen"},
 						{text: "VGA or HDMI Cable", value: "VGA or HDMI Cable"},
