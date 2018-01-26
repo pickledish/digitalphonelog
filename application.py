@@ -8,20 +8,20 @@ from flask import render_template, request
 
 application = Flask(__name__)
 
-sheet = None
+client = None
 
 def getSheet():
 
-	global sheet
+	global client
 
-	if (sheet is None):
+	if (client is None):
 
 		# Use credentials to create a client which interacts with the Google Spreadsheets API
 		scope = ['https://spreadsheets.google.com/feeds']
 		creds = ServiceAccountCredentials.from_json_keyfile_name('static/client-secrets.json', scope)
 		client = gspread.authorize(creds)
-		sheet = client.open("ECM Phone Log").sheet1
-
+		
+	sheet = client.open("ECM Phone Log").sheet1
 	return sheet
 
 @application.route('/thanks')
