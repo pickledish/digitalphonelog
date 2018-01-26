@@ -8,38 +8,44 @@ from flask import render_template, request
 
 application = Flask(__name__)
 
-client = None
+sheet = None
 
-def getSheet():
+def getSheetFast():
 
-	global client
+	return sheet
 
-	if (client is None):
+def getSheetAccurate():
 
-		# Use credentials to create a client which interacts with the Google Spreadsheets API
-		scope = ['https://spreadsheets.google.com/feeds']
-		creds = ServiceAccountCredentials.from_json_keyfile_name('static/client-secrets.json', scope)
-		client = gspread.authorize(creds)
-		
+	global sheet
+
+	# Use credentials to create a client which interacts with the Google Spreadsheets API
+	scope = ['https://spreadsheets.google.com/feeds']
+	creds = ServiceAccountCredentials.from_json_keyfile_name('static/client-secrets.json', scope)
+	client = gspread.authorize(creds)
 	sheet = client.open("ECM Phone Log").sheet1
+
 	return sheet
 
 @application.route('/thanks')
 def thanks():
 
-	s = getSheet()
-	return render_template('index.html', numEntries = (s.row_count - 1))
+	s = getSheetFast()
+	rows = (s.row_count - 1) if (s) else "?"
+
+	return render_template('index.html', numEntries = rows)
 
 @application.route('/')
 def index():
 
-	s = getSheet()
-	return render_template('index.html', numEntries = (s.row_count - 1))
+	s = getSheetFast()
+	rows = (s.row_count - 1) if (s) else "?"
+
+	return render_template('index.html', numEntries = rows)
 
 @application.route('/submit', methods = ['POST'])
 def submitter():
 
-	def submitHelper(sh, form):
+	def submitHelper(form):
 
 		date = form.get("date")
 		time = form.get("time")
@@ -56,11 +62,13 @@ def submitter():
 		length = form.get("length")
 		comments = form.get("comments")
 
+		sh = getSheetAccurate()
+
 		row = [date, time, howFind, category, issue, details, classs, room, name, ext, person, how, length, comments]
 		index = sh.row_count + 1
 		sh.insert_row(row, index)
 
-	thread = Thread(target = submitHelper, args = (getSheet(), request.form))
+	thread = Thread(target = submitHelper, args = (request.form,))
 	thread.start()
 
 	return json.dumps({'success':True}), 200, {'ContentType':'application/json'} 
